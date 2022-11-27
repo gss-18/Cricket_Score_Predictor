@@ -3,7 +3,8 @@ import pickle
 import pandas as pd
 import numpy as np
 import base64
-
+import sklearn 
+import xgboost 
 pipe = pickle.load(open('pipe.pkl','rb'))
 
 teams = ['Australia',
