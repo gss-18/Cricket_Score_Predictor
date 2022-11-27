@@ -2,8 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import numpy as np
-import xgboost
-import sklearn
+import base64
 
 pipe = pickle.load(open('pipe.pkl','rb'))
 
@@ -54,6 +53,24 @@ cities = ['Colombo',
  'Christchurch',
  'Trinidad']
 
+def add_bg_fromurl(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
+    <style>
+   .stApp {{
+        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+
+add_bg_fromurl('image.jpg')
+
+
 st.title('Cricket Score Predictor')
 
 col1, col2 = st.columns(2)
@@ -85,3 +102,6 @@ if st.button('Predict Score'):
     
     result = pipe.predict(input_df)
     st.header("Predicted Score - " + str(int(result[0])))
+
+
+
